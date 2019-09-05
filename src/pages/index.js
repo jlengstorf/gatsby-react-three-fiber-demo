@@ -67,23 +67,29 @@ const Box = () => {
   )
 }
 
-export default () => (
-  <>
-    <h1>Hello everyone!</h1>
-    <Canvas
-      camera={{ position: [0, 0, 5] }}
-      onCreated={({ gl }) => {
-        gl.shadowMap.enabled = true
-        gl.shadowMap.type = THREE.PCFSoftShadowMap
-      }}
-    >
-      <ambientLight intensity={0.5} />
-      <spotLight position={[15, 20, 5]} penumbra={1} castShadow />
-      <fog attach="fog" args={["black", 10, 25]} />
-      <Controls />
-      {/* <Box /> */}
-      {/* <Plane /> */}
-      <SpaceShip />
-    </Canvas>
-  </>
-)
+export default () => {
+  const isBrowser = typeof window !== "undefined"
+
+  return (
+    <>
+      <h1>Hello everyone!</h1>
+      {isBrowser && (
+        <Canvas
+          camera={{ position: [0, 0, 5] }}
+          onCreated={({ gl }) => {
+            gl.shadowMap.enabled = true
+            gl.shadowMap.type = THREE.PCFSoftShadowMap
+          }}
+        >
+          <ambientLight intensity={0.5} />
+          <spotLight position={[15, 20, 5]} penumbra={1} castShadow />
+          <fog attach="fog" args={["black", 10, 25]} />
+          <Controls />
+          {/* <Box /> */}
+          {/* <Plane /> */}
+          <SpaceShip />
+        </Canvas>
+      )}
+    </>
+  )
+}
